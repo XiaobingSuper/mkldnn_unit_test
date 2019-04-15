@@ -52,7 +52,7 @@ def deconv3d(groups =1, dilation=1):
     input2 = input.clone()
     input1.requires_grad_(True)
     input2.requires_grad_(True)
-    deconv1= nn.ConvTranspose3d(16, 34, (3, 5, 2), stride=(2, 1, 1), padding=(0, 4, 2), groups = groups, dilation=dilation)
+    deconv1= nn.ConvTranspose3d(16, 36, (3, 5, 2), stride=(2, 1, 1), padding=(0, 4, 2), groups = groups, dilation=dilation)
     #deconv1= nn.ConvTranspose3d(2, 2, (2,1,2), groups = groups)
     foward1 = deconv1(input1)
     #print(foward1)
@@ -72,20 +72,43 @@ def deconv3d(groups =1, dilation=1):
     #print(foward1)
     #print(foward2)
     print((foward1-foward2).abs().max())
-    if (foward1-foward2).abs().max()<1e-6:
+    if (foward1-foward2).abs().max()<1e-5:
        print("the forward is same in forward")
     else :
        print("the forward is not same in training")
     # backward
-    if (input_grad1-input_grad2).abs().max()<1e-6:
+    print((input_grad1-input_grad2).abs().max())
+    if (input_grad1-input_grad2).abs().max()<1e-5:
        print("the backward is same in training")
     else:
        print("the backward is not same in training")
 
 if __name__ == '__main__':
     deconv2d()
-    #deconv2d(groups=2)
-    #deconv3d()
-    #deconv3d(groups=2)
-    #deconv2d(dilation=2)
-    #deconv3d(dilation=2)
+    # group
+    '''
+    deconv2d(groups=2)
+    deconv2d(groups=4)
+    #dilation
+    deconv2d(dilation=3)
+    deconv2d(groups=2, dilation=3)
+    deconv2d(groups=4, dilation=3)
+    
+    deconv2d(dilation=(3, 1))
+    deconv2d(groups=2, dilation=(3, 1))
+    deconv2d(groups=4, dilation=(3, 1))
+    '''
+    # 3d
+    deconv3d()
+    '''
+    #group
+    deconv3d(groups=2)
+    deconv3d(groups=4)
+    #dilation
+    deconv3d(dilation=3)
+    deconv3d(groups=2, dilation=3)
+    deconv3d(groups=4, dilation=3)
+    deconv3d(dilation=(3, 1, 2))
+    deconv3d(groups=2, dilation=(3, 1, 2))
+    deconv3d(groups=4, dilation=(3, 1, 2))
+    '''

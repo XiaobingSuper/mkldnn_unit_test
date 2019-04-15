@@ -4,7 +4,7 @@ import os
 import copy
 from torch.autograd import Variable
 
-def pooling(kernel_size, stride=None, padding=0, ceil_mode=False, dim =2):
+def pooling(kernel_size, stride=None, padding=0, ceil_mode=True, dim =2):
    
     os.environ['MKLDNN'] = '0'
     if dim ==2:
@@ -39,14 +39,6 @@ def pooling(kernel_size, stride=None, padding=0, ceil_mode=False, dim =2):
     if torch.equal(x_grad1,x_grad2):
       print("the backward is same in training")
     else:
-      #print((x_grad1!=x_grad2).sum())
-      #print(input)
-      #print(y1)
-      #print(y2)
-      #print(foward1)
-      #print(foward2)
-      #print(x_grad1)
-      #print(x_grad2)
       print("the backward is not same in training")
 
 
@@ -109,4 +101,4 @@ if __name__ == '__main__':
     padding = (1,0,1)
     pooling(kernel_size,stride, padding= padding, dim = 3) # ceil model model, 
     pooling(kernel_size,stride, padding=padding, ceil_mode=False, dim = 3) # floor model model, 
-    
+

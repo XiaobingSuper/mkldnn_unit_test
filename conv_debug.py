@@ -72,13 +72,13 @@ def conv3d(groups =1, dilation=1):
     #print(foward1)
     #print(foward2)
     print((forward1-forward2).abs().max())
-    if (forward1-forward2).abs().max()<1e-6:
+    if (forward1-forward2).abs().max()<1e-5:
        print("the forward is same in forward")
     else :
        print("the forward is not same in training")
     # backward
     print((input_grad1-input_grad2).abs().max())
-    if (input_grad1-input_grad2).abs().max()<1e-6:
+    if (input_grad1-input_grad2).abs().max()<1e-5:
        print("the backward is same in training")
     else:
        print("the backward is not same in training")
@@ -98,6 +98,7 @@ if __name__ == '__main__':
     conv2d(groups=4, dilation=(3, 1))
 
     # 3d
+    print("3d conv")
     conv3d()
     #group
     conv3d(groups=2)

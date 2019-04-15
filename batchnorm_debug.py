@@ -30,7 +30,8 @@ def batchnorm(input, num_features, eps = 1e-05, momentum = 0.1,
     y2 = forward2.sum()
     y2.backward()
     input_grad2 = input2.grad.clone()
-
+    
+    print((forward1-forward2).abs().max())
     if (forward1-forward2).abs().max()<1e-5:
        print("the forward is same in traning")
     else :
